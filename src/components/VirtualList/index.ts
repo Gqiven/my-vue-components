@@ -1,4 +1,4 @@
-import { computed, CSSProperties, defineComponent, h, ref, unref, VNodeChild } from "vue";
+import { computed, CSSProperties, defineComponent, h, onUpdated, ref, unref, VNodeChild } from "vue";
 import { isNumber } from "../../utils";
 import { virtualListProps } from './props'
 
@@ -49,12 +49,14 @@ const getItemSize = ({ itemSize }: any) => itemSize as number
 export default defineComponent({
   name: 'VirtualList',
   props: virtualListProps,
-  setup(props) {
+  setup(props, { expose }) {
     // data
     const states = ref({
       isScrolling: false,
       scrollOffset: isNumber(props.initScrollOffset) ? props.initScrollOffset : 0
     })
+    const windowRef = ref<HTMLElement>()
+
     // computed
     const itemsToRender = computed(() => {
       const total = props.data.length// 总数据数量
@@ -121,12 +123,34 @@ export default defineComponent({
       return style
     }
 
+    const scrollToItem = (idx: number) => {
+      let offset = (props.itemSize as number) * idx
+      states.value = {
+        ...unref(states),
+        scrollOffset: offset
+      }
+    }
+
+    onUpdated(() => {
+      let { scrollOffset } = unref(states)
+      const windowElement = unref(windowRef)
+      if(windowElement) {
+        windowElement.scrollTop = scrollOffset
+      }
+    })
+
+    expose({
+      windowRef,
+      scrollToItem
+    })
+
     return {
       itemsToRender,
       innerStyle,
       states,
       onScroll: scrollVertically,
-      getItemStyle
+      getItemStyle,
+      windowRef
     }
   },
   render(ctx: any) {
@@ -170,7 +194,8 @@ export default defineComponent({
       {
         className,
         style: `position: relative; overflow-y: scroll; will-change: transform; direction: ltr; height: ${height}px; width: ${width || 500}px`,
-        onScroll
+        onScroll,
+        ref: 'windowRef',
       },
       [InnerNode]
     )

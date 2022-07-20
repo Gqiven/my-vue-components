@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 // import VirtualizedCheckGroupSelector from './components/VirtualizedCheckGroupSelector/index.vue'
-import VirtualList from './components/VirtualList'
+// import VirtualList from './components/VirtualList'
+import VirtualListWithFilter from './components/VirtualListWithFilter/index.vue'
 
 const initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
@@ -15,8 +16,13 @@ const options = Array.from({ length: 1000 }).map((_, idx) => ({
 <template>
   <div>
     <!-- <VirtualizedCheckGroupSelector :options="options" /> -->
-    <VirtualList containerElement="div" :data="options" :height="320"
-      :itemSize="32" className="v-list" :initScrollOffset="32" />
+    <!-- <VirtualList containerElement="div" :data="options" :height="320"
+      :itemSize="32" className="v-list" :initScrollOffset="32" /> -->
+
+    <VirtualListWithFilter
+      containerElement="div" :data="options" :height="320"
+      :itemSize="32" className="v-list" :initScrollOffset="32"
+    />
   </div>
 </template>
 

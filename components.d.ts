@@ -12,5 +12,6 @@ declare module '@vue/runtime-core' {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     VirtualizedCheckGroupSelector: typeof import('./src/components/VirtualizedCheckGroupSelector/index.vue')['default']
     VirtualList: typeof import('./src/components/VirtualList/index.vue')['default']
+    VirtualListWithFilter: typeof import('./src/components/VirtualListWithFilter/index.vue')['default']
   }
 }
