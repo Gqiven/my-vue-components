@@ -65,7 +65,6 @@ const optionsMap = computed(() => {
     return map
   }, {})
 })
-console.log(333, optionsMap)
 
 const handleCheckAllChange = (checked: boolean) => {
   isIndeterminate.value = false

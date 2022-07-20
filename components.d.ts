@@ -11,5 +11,6 @@ declare module '@vue/runtime-core' {
     ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     VirtualizedCheckGroupSelector: typeof import('./src/components/VirtualizedCheckGroupSelector/index.vue')['default']
+    VirtualList: typeof import('./src/components/VirtualList/index.vue')['default']
   }
 }
